@@ -249,7 +249,7 @@ section { padding: 7rem 6vw; }
   min-height: 320px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   transition: border-color 0.3s, transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
 }
@@ -314,16 +314,17 @@ section { padding: 7rem 6vw; }
 /* Card 2 — Shuffler */
 .shuffler-stack {
   position: relative;
-  height: 90px;
+  height: 116px;
   margin-top: 1.25rem;
 }
 .shuffler-item {
   position: absolute;
-  inset: 0;
+  left: 0; right: 0;
+  top: 0;
   background: rgba(201,168,76,0.08);
   border: 1px solid rgba(201,168,76,0.2);
   border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: var(--text-light);
@@ -331,6 +332,7 @@ section { padding: 7rem 6vw; }
   align-items: center;
   gap: 0.6rem;
   transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s;
+  will-change: transform, opacity;
 }
 .shuffler-item .s-dot { width: 7px; height: 7px; background: var(--champagne); border-radius: 50%; flex-shrink: 0; }
 
@@ -731,6 +733,219 @@ section { padding: 7rem 6vw; }
   .g-item.wide { grid-column: span 2; }
   .video-grid { grid-template-columns: 1fr; }
 }
+
+/* ── PILLARS ACCORDION ───────────────────────────────── */
+#pillars { background: var(--obsidian); }
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.pillar-card {
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.pillar-card:hover { border-color: rgba(201,168,76,0.35); }
+.pillar-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.75rem;
+  cursor: pointer;
+  background: var(--obsidian2);
+  user-select: none;
+}
+.pillar-header:hover { background: var(--slate); }
+.pillar-header-left { flex: 1; }
+.pillar-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--champagne);
+  margin-bottom: 0.5rem;
+}
+.pillar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+}
+.pillar-summary {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.pillar-toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: background 0.2s, transform 0.3s;
+  color: var(--champagne);
+  font-size: 14px;
+  line-height: 1;
+}
+.pillar-card.open .pillar-toggle { background: rgba(201,168,76,0.15); transform: rotate(45deg); }
+.pillar-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.pillar-card.open .pillar-body { max-height: 1200px; }
+.pillar-body-inner { padding: 0 1.75rem 1.5rem; }
+.pillar-block { margin-bottom: 1.25rem; }
+.pillar-block:last-child { margin-bottom: 0; }
+.pillar-block-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 0.5rem;
+}
+.pillar-block p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.pillar-pubs { list-style: none; }
+.pillar-pubs li {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+}
+.pillar-pubs li::before { content: '—'; color: var(--champ-dim); flex-shrink: 0; }
+.pillar-pubs li:last-child { border-bottom: none; }
+.pillar-media {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  border: 1px dashed rgba(201,168,76,0.2);
+  border-radius: 0.5rem;
+  padding: 8px 12px;
+}
+.pillar-media svg { width: 14px; height: 14px; stroke: var(--champ-dim); fill: none; stroke-width: 1.5; flex-shrink: 0; }
+
+/* ── NEWS ────────────────────────────────────────────── */
+#news { background: var(--obsidian2); }
+.news-list { margin-top: 2.5rem; }
+.news-row {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  align-items: flex-start;
+}
+.news-row:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+.news-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  min-width: 72px;
+  flex-shrink: 0;
+  padding-top: 2px;
+  letter-spacing: 0.04em;
+}
+.news-text { font-size: 13px; color: var(--text-light); line-height: 1.55; flex: 1; }
+.news-text a { color: var(--champagne); text-decoration: none; }
+.news-text a:hover { text-decoration: underline; }
+.news-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.badge-paper { background: rgba(100,180,100,0.12); color: #7ED4A0; border: 1px solid rgba(100,180,100,0.3); }
+.badge-award { background: rgba(255,180,50,0.15); color: #FFB830; border: 1px solid rgba(255,180,50,0.4); }
+.badge-event { background: rgba(120,160,255,0.12); color: #8AABFF; border: 1px solid rgba(120,160,255,0.25); }
+
+/* ── PEOPLE (hidden) ─────────────────────────────────── */
+#people { display: none; background: var(--obsidian); }
+
+/* ── JOIN US ─────────────────────────────────────────── */
+#joinus { background: var(--obsidian2); }
+.joinus-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+.joinus-text p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.joinus-roles { display: flex; flex-direction: column; gap: 1rem; }
+.joinus-role {
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: var(--radius-md, 1rem);
+  padding: 1.25rem 1.5rem;
+  background: var(--obsidian);
+  transition: border-color 0.3s;
+}
+.joinus-role:hover { border-color: rgba(201,168,76,0.35); }
+.joinus-role-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ivory);
+  margin-bottom: 0.4rem;
+}
+.joinus-role-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.joinus-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1.5rem;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--obsidian);
+  background: var(--champagne);
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), background 0.2s;
+}
+.joinus-cta:hover { transform: scale(1.03); background: #d4af52; }
+
+@media (max-width: 768px) {
+  .pillars-grid { grid-template-columns: 1fr; }
+  .joinus-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+@keyframes drone-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
 </style>
 </head>
 <body>
@@ -739,9 +954,10 @@ section { padding: 7rem 6vw; }
 <nav id="navbar">
   <div class="nav-logo">FRPL <span>·</span> Sant'Anna</div>
   <div class="nav-links">
-    <a href="#features">Research</a>
-    <a href="#protocol">Pillars</a>
+    <a href="#pillars">Research</a>
+    <a href="#news">News</a>
     <a href="#projects">Projects</a>
+    <a href="#joinus">Join Us</a>
     <a href="#publications">Publications</a>
   </div>
   <a class="nav-cta" href="mailto:massimo.satler@santannapisa.it">Get in touch</a>
@@ -763,6 +979,175 @@ section { padding: 7rem 6vw; }
       <span class="hero-tag">Horizon Europe</span>
     </div>
     <a class="hero-cta" href="#features">Explore our research ↓</a>
+  </div>
+</section>
+
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="section-eyebrow">Research areas</div>
+  <h2 class="section-title">Four pillars of <em>autonomous robotics</em></h2>
+  <div class="pillars-grid">
+
+    <!-- PILLAR 01 -->
+    <div class="pillar-card fade-up" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-header-left">
+          <div class="pillar-num">01 — Autonomous Exploration &amp; SLAM</div>
+          <div class="pillar-title">Navigate the unknown,<br>map as you go</div>
+          <div class="pillar-summary">We develop SLAM algorithms and autonomous exploration strategies for unknown environments — indoor and outdoor, GPS-denied — with a focus on target-oriented search for Search and Rescue (SaR) missions.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Active exploration combines SLAM with navigation strategies where the robot autonomously decides where to move to maximise information gain. Current directions include Semantic SLAM (object-labelled maps), Lifelong SLAM (dynamic environment adaptation), Deep SLAM (neural visual representations), and Multi-Agent Cooperative SLAM (C-SLAM) for collaborative map building. Key challenges: temporal efficiency, map completeness, target localisation, and onboard computational constraints.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Search and rescue in unknown 3D environments; autonomous indoor exploration with reduced coverage time; UAV, UGV, and AUV operations in GPS-denied areas; augmented reality with precise spatial tracking.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Learning Heuristics for Efficient Environment Exploration Using GNN — ICAR 2023</li>
+              <li>GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning — RA-L 2022</li>
+              <li>An Efficient Object-Oriented Exploration Algorithm for UAVs — ICUAS 2021</li>
+              <li>An Efficient Framework for Autonomous UAV Missions in GNSS-Denied Environments — Drones 2023</li>
+              <li>Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance — JIRS 2024</li>
+              <li>Autonomous Exploration of Indoor Environments with a MAV — RED-UAS 2015</li>
+              <li>A Lightweight SLAM Algorithm for Indoor Autonomous Navigation — ACRA 2014</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Autonomous indoor flight demo — video coming soon
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 02 -->
+    <div class="pillar-card fade-up" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-header-left">
+          <div class="pillar-num">02 — Heterogeneous Multi-Agent Cooperation</div>
+          <div class="pillar-title">UAV meets UGV,<br>missions multiply</div>
+          <div class="pillar-summary">We study the coordination of autonomous agents with different structures and capabilities — combining aerial and ground robots to collaboratively achieve complex missions that neither could accomplish alone.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Key research directions include Multi-Agent Reinforcement Learning (MARL) for decentralised sequential decision-making, and Vision-Language Models (VLMs) for fine-grained visual reasoning in cooperative tasks. Open challenges remain in heterogeneous cooperation, particularly in scenarios requiring detailed visual understanding and emergent compositional cooperation patterns.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Hierarchical task planning across heterogeneous agents; multi-objective optimisation for collaborative task allocation; joint aerial-ground exploration for search and rescue; GNSS-denied cooperative localisation — validated at the Leonardo Drone Contest 2023 (1st place).</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment — ERF 2025</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Multi-agent cooperative mission — video coming soon
+            </div>
+            <div class="pillar-media" style="margin-top:6px">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Leonardo Drone Contest 2023 — winning run — video coming soon
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 03 -->
+    <div class="pillar-card fade-up" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-header-left">
+          <div class="pillar-num">03 — Infrastructure Inspection</div>
+          <div class="pillar-title">Into confined spaces,<br>beyond human reach</div>
+          <div class="pillar-summary">We deploy autonomous UAVs for inspection of bridges, buildings, industrial plants, and confined spaces — detecting structural defects automatically, without exposing operators to hazardous environments. A landmark activity is the inspection of an ENEL boiler using a custom micro aerial vehicle.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Research integrates AI-enhanced drone methodology with consumer-grade cameras and open-source software for automated defect detection. Deep learning enables UAV-based visual inspection with neural networks trained for anomaly recognition. For 3D reconstruction, we deploy <a href="https://github.com/hku-mars/fast-livo2" target="_blank" rel="noopener" style="color:var(--champagne)">FastLIVO2</a> — a state-of-the-art LiDAR-Inertial-Visual odometry system — onboard our drone platforms, enabling dense real-time mapping of complex structures.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Inspection of bridges, dams, and buildings in remote or hazardous locations; industrial plant inspection in boilers and confined spaces; 3D structural reconstruction for digital twin generation; critical infrastructure monitoring without human risk exposure.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Confined Spaces Industrial Inspection with MAV and Laser Range Finder Localization — Int. J. Micro Air Vehicles 2018</li>
+              <li>Towards an Autonomous Flying Robot for Inspections in Open and Constrained Spaces — SSD 2014</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Infrastructure inspection demo — video coming soon
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 04 -->
+    <div class="pillar-card fade-up" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-header-left">
+          <div class="pillar-num">04 — Environmental Monitoring</div>
+          <div class="pillar-title">Wide-scale sensing,<br>where humans cannot go</div>
+          <div class="pillar-summary">We develop aerial and ground robotic systems for large-scale periodic monitoring of natural and agricultural environments — collecting environmental data in areas that are remote, hazardous, or impractical to survey manually.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Research spans remote sensing with UAV platforms equipped with multispectral, thermal, and LiDAR sensors; autonomous data collection pipelines for precision agriculture; and photogrammetry-based territorial mapping for environmental change assessment. We also explore autonomous aerial systems in complex cultivation environments — woodland and orchard settings — where GPS coverage is limited and canopy structure requires adaptive flight strategies.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Precision agriculture and crop monitoring with farm robotics; mapping and assessment of remote or contaminated areas; photogrammetric territorial surveys; environmental monitoring in the context of the national Agritech PNRR partnership.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Towards Smart Farming and Sustainable Agriculture with Drones — Intelligent Environments 2015</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Environmental monitoring demo — video coming soon
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -794,10 +1179,10 @@ section { padding: 7rem 6vw; }
         <div class="shuffler-item" style="transform:translateY(0);z-index:3;">
           <span class="s-dot"></span>Jetson Orin NX — 100 TOPS onboard
         </div>
-        <div class="shuffler-item" style="transform:translateY(8px) scale(0.97);z-index:2;opacity:0.7;">
+        <div class="shuffler-item" style="transform:translateY(28px) scale(0.97);z-index:2;opacity:0.7;">
           <span class="s-dot"></span>Intel NUC x86 — real-time SLAM
         </div>
-        <div class="shuffler-item" style="transform:translateY(16px) scale(0.94);z-index:1;opacity:0.4;">
+        <div class="shuffler-item" style="transform:translateY(56px) scale(0.94);z-index:1;opacity:0.4;">
           <span class="s-dot"></span>LiDAR + Stereo + Thermal fusion
         </div>
       </div>
@@ -1046,6 +1431,75 @@ section { padding: 7rem 6vw; }
   </div>
 </section>
 
+
+<!-- NEWS -->
+<section id="news">
+  <div class="section-eyebrow">Latest updates</div>
+  <h2 class="section-title">News &amp; <em>achievements</em></h2>
+  <div class="news-list">
+    <div class="news-row fade-up">
+      <span class="news-date">2026</span>
+      <span class="news-text">Paper accepted — <em>Autonomous UAVs as Rescue Agents: Blink Detection for Human-State-Aware Survivor Localization</em> · Drones, MDPI vol.10</span>
+      <span class="news-badge badge-paper">Paper</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">2025</span>
+      <span class="news-text">Paper accepted — <em>Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment</em> · European Robotics Forum, Springer</span>
+      <span class="news-badge badge-paper">Paper</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">2025</span>
+      <span class="news-text">Paper accepted — <em>Augmented Reality in the DESIRE6G Cloud-native Infrastructure with Multi-Agent System</em> · IEEE CSCN 2025</span>
+      <span class="news-badge badge-paper">Paper</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Sep 2024</span>
+      <span class="news-text">Leonardo Drone Contest 2024 — participation · cycle 2023–2025</span>
+      <span class="news-badge badge-event">Event</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">2024</span>
+      <span class="news-text">Paper accepted — <em>Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance and Payload Delivery</em> · Journal of Intelligent &amp; Robotic Systems, Springer</span>
+      <span class="news-badge badge-paper">Paper</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Sep 2023</span>
+      <span class="news-text">🏆 <strong>Leonardo Drone Contest 2023 — 1st place</strong> · Team Sant'Anna · GNSS-denied cooperative localisation with heterogeneous UAV + UGV</span>
+      <span class="news-badge badge-award">Award</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Sep 2023</span>
+      <span class="news-text">Leonardo Drone Contest 2023 — participation · cycle 2023–2025, founding session</span>
+      <span class="news-badge badge-event">Event</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">2023</span>
+      <span class="news-text">Paper accepted — <em>An Efficient Framework for Autonomous UAV Missions in Partially-Unknown GNSS-Denied Environments</em> · Drones, MDPI vol.7</span>
+      <span class="news-badge badge-paper">Paper</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Sep 2022</span>
+      <span class="news-text">Leonardo Drone Contest 2022 — participation · cycle 2021–2023</span>
+      <span class="news-badge badge-event">Event</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Jun 2022</span>
+      <span class="news-text">🥉 <strong>ICUAS 2022 UAV Competition — 3rd place</strong> · Team SantDrone · Dubrovnik, Croatia</span>
+      <span class="news-badge badge-award">Award</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">Sep 2021</span>
+      <span class="news-text">Leonardo Drone Contest 2021 — participation · founding edition · cycle 2021–2023</span>
+      <span class="news-badge badge-event">Event</span>
+    </div>
+    <div class="news-row fade-up">
+      <span class="news-date">2021</span>
+      <span class="news-text">🏅 <strong>Finalist — OpenCV Spatial AI Contest 2021</strong></span>
+      <span class="news-badge badge-award">Award</span>
+    </div>
+  </div>
+</section>
+
 <!-- PUBLICATIONS -->
 <section id="publications">
   <div class="section-eyebrow">Selected publications</div>
@@ -1059,6 +1513,54 @@ section { padding: 7rem 6vw; }
     <div class="pub-row fade-up"><span class="pub-year">2022</span><div><div class="pub-title">GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning</div><div class="pub-venue">IEEE Robotics and Automation Letters</div></div></div>
     <div class="pub-row fade-up"><span class="pub-year">2021</span><div><div class="pub-title">An Efficient Object-Oriented Exploration Algorithm for Unmanned Aerial Vehicles</div><div class="pub-venue">ICUAS 2021 · IEEE</div></div></div>
     <div class="pub-row fade-up"><span class="pub-year">2018</span><div><div class="pub-title">Confined Spaces Industrial Inspection with MAV and Laser Range Finder Localization</div><div class="pub-venue">Int. Journal of Micro Air Vehicles · SAGE</div></div></div>
+  </div>
+</section>
+
+
+<!-- PEOPLE (hidden — TODO) -->
+<!-- TODO: aggiungere foto e bio team quando disponibili
+     Membri: Massimo Satler, Matteo Unetti, Giulia Bassani, Carlo Alberto Avizzano
+     Struttura prevista: foto + nome + ruolo + link Scholar/LinkedIn
+     Per rendere visibile: rimuovere display:none dal CSS #people -->
+<section id="people">
+  <div class="section-eyebrow">The team</div>
+  <h2 class="section-title">People &amp; <em>collaborators</em></h2>
+  <p style="color:var(--text-muted);font-size:14px;margin-top:2rem;">Team profiles coming soon.</p>
+</section>
+
+
+<!-- JOIN US -->
+<section id="joinus">
+  <div class="section-eyebrow">Join the lab</div>
+  <h2 class="section-title">Work with us on <em>autonomous robotics</em></h2>
+  <div class="joinus-inner">
+    <div class="joinus-text">
+      <p>We are always looking for motivated students and researchers who want to work on real autonomous systems — not just simulations. Our lab offers hands-on experience with custom UAVs, ground robots, and state-of-the-art sensing in a well-equipped indoor arena.</p>
+      <p>We work at the intersection of aerial robotics, SLAM, multi-agent systems, and edge computing. If you are passionate about making robots fly, navigate, and cooperate autonomously, we want to hear from you.</p>
+      <p>We welcome applications from Master's students (thesis projects), PhD candidates, and visiting researchers. Experience with ROS 2, PX4, Python, or C++ is a plus — curiosity and rigour are essential.</p>
+      <a class="joinus-cta" href="mailto:massimo.satler@santannapisa.it">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Send your application
+      </a>
+    </div>
+    <div class="joinus-roles">
+      <div class="joinus-role">
+        <div class="joinus-role-title">Master's Thesis Students</div>
+        <div class="joinus-role-desc">6–12 month projects on UAV autonomy, SLAM, multi-agent systems, or edge inference. Possibility of co-authoring publications.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">PhD Candidates</div>
+        <div class="joinus-role-desc">We occasionally open PhD positions funded through EU projects (Horizon Europe). Contact us with your CV and research interests.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">Visiting Researchers</div>
+        <div class="joinus-role-desc">Short-term visits for collaboration on joint research topics. We are open to bilateral exchanges with EU institutions.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">EU Project Partners</div>
+        <div class="joinus-role-desc">Looking for a technical partner with flight-tested UAV expertise for a Horizon Europe proposal? Get in touch.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1154,8 +1656,8 @@ const shuffleItems = document.querySelectorAll('.shuffler-item');
 function shuffleCycle() {
   const positions = [
     { y: '0px', scale: 1, opacity: 1, zIndex: 3 },
-    { y: '8px', scale: 0.97, opacity: 0.7, zIndex: 2 },
-    { y: '16px', scale: 0.94, opacity: 0.4, zIndex: 1 },
+    { y: '28px', scale: 0.97, opacity: 0.7, zIndex: 2 },
+    { y: '56px', scale: 0.94, opacity: 0.4, zIndex: 1 },
   ];
   const order = Array.from(shuffleItems);
   order.push(order.shift());
@@ -1209,6 +1711,14 @@ function closeLb() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+// ── PILLAR ACCORDION ─────────────────────────────────
+function togglePillar(card) {
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.pillar-card.open').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+
 </script>
 </body>
 </html>

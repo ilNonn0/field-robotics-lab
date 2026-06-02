@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Robotics and Perception Lab — Sant'Anna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: #ffffff;
+  color: #1a1a18;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --bg:        #ffffff;
+  --bg-2:      #f7f6f3;
+  --bg-3:      #f0efe9;
+  --text-1:    #1a1a18;
+  --text-2:    #5a5a56;
+  --text-3:    #9a9990;
+  --border:    rgba(26,26,24,0.12);
+  --border-2:  rgba(26,26,24,0.22);
+  --accent:    #1E2761;
+  --accent-lt: #CADCFC;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --max:       800px;
+}
+
+/* ── LAYOUT ─────────────────────────────────────── */
+.page { max-width: var(--max); margin: 0 auto; padding: 0 2rem 5rem; }
+section { padding: 4.5rem 0; border-top: 0.5px solid var(--border); }
+section:first-of-type { border-top: none; }
+
+/* ── NAV ─────────────────────────────────────────── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 0 1.4rem;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 0;
+  flex-wrap: wrap; gap: 0.75rem;
+  position: sticky; top: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+.nav-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 15px;
+  color: var(--text-1);
+  text-decoration: none;
+}
+.nav-logo span { font-family: 'DM Sans', sans-serif; color: var(--text-3); font-size: 11px; margin-left: 8px; }
+.nav-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.nav-links a {
+  font-size: 11px; color: var(--text-2);
+  letter-spacing: 0.07em; text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-1); }
+.nav-cta {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--bg);
+  background: var(--accent); padding: 7px 18px;
+  border-radius: 999px; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+/* ── HERO ─────────────────────────────────────────── */
+#hero {
+  padding: 5rem 0 4rem;
+  border-top: none;
+}
+.eyebrow {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content: ''; display: inline-block; width: 20px; height: 0.5px; background: var(--border-2); }
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 400; line-height: 1.15;
+  margin-bottom: 1.25rem; max-width: 580px;
+}
+.hero-title em { font-style: italic; color: var(--text-2); }
+.hero-sub {
+  font-size: 15px; line-height: 1.75; color: var(--text-2);
+  max-width: 520px; margin-bottom: 1.75rem;
+}
+.hero-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; }
+.tag {
+  font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase;
+  background: var(--bg-2); color: var(--text-2);
+  padding: 4px 10px; border-radius: 3px;
+  border: 0.5px solid var(--border);
+}
+.hero-cta {
+  display: inline-block; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--bg); background: var(--accent);
+  padding: 0.75rem 2rem; border-radius: 999px;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.hero-cta:hover { opacity: 0.85; }
+
+/* ── SECTION LABELS ──────────────────────────────── */
+.slabel {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.slabel::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 400; line-height: 1.2;
+  margin-bottom: 2rem;
+}
+.section-title em { font-style: italic; color: var(--text-2); }
+
+/* ── PILLARS ─────────────────────────────────────── */
+.pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.pillar-card { background: var(--bg); }
+.pillar-header {
+  padding: 1.4rem 1.5rem;
+  cursor: pointer;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  transition: background 0.2s;
+}
+.pillar-header:hover { background: var(--bg-2); }
+.pillar-num { font-size: 10px; color: var(--text-3); margin-bottom: 0.4rem; letter-spacing: 0.06em; }
+.pillar-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; font-weight: 400; color: var(--text-1); margin-bottom: 0.5rem; line-height: 1.3; }
+.pillar-summary { font-size: 12.5px; color: var(--text-2); line-height: 1.65; }
+.pillar-toggle {
+  width: 24px; height: 24px; border: 0.5px solid var(--border-2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px; font-size: 14px; color: var(--text-2);
+  transition: transform 0.3s; line-height: 1;
+}
+.pillar-card.open .pillar-toggle { transform: rotate(45deg); }
+.pillar-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1); }
+.pillar-card.open .pillar-body { max-height: 1200px; }
+.pillar-body-inner { padding: 0 1.5rem 1.5rem; border-top: 0.5px solid var(--border); }
+.pillar-block { margin-top: 1.1rem; }
+.pillar-block-title { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
+.pillar-block p { font-size: 12.5px; color: var(--text-2); line-height: 1.7; }
+.pillar-pubs { list-style: none; }
+.pillar-pubs li { font-size: 12px; color: var(--text-2); padding: 4px 0; border-bottom: 0.5px solid var(--border); line-height: 1.5; display: flex; gap: 8px; }
+.pillar-pubs li::before { content: '—'; color: var(--text-3); flex-shrink: 0; }
+.pillar-pubs li:last-child { border-bottom: none; }
+.pillar-media { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-3); border: 0.5px dashed var(--border-2); border-radius: 6px; padding: 8px 12px; margin-top: 6px; }
+.pillar-media svg { width: 13px; height: 13px; stroke: var(--text-3); fill: none; stroke-width: 1.5; flex-shrink: 0; }
+
+/* ── INFRA STATS ─────────────────────────────────── */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg) var(--radius-lg) 0 0; overflow: hidden; }
+.stat { background: var(--bg); padding: 1.1rem 1rem; }
+.stat-n { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.1; }
+.stat-l { font-size: 11px; color: var(--text-2); margin-top: 4px; line-height: 1.4; }
+.stat-s { font-size: 10px; color: var(--text-3); margin-top: 3px; }
+.infra-cats { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); overflow: hidden; }
+.cat { background: var(--bg); padding: 1rem 1.25rem; }
+.cat-h { font-size: 12px; font-weight: 500; margin-bottom: 0.7rem; }
+.ci { font-size: 11px; color: var(--text-2); padding: 3px 0; border-bottom: 0.5px solid var(--border); line-height: 1.55; display: flex; gap: 7px; }
+.ci:last-child { border-bottom: none; }
+.ci-d { color: var(--text-3); flex-shrink: 0; }
+.ci strong { font-weight: 500; color: var(--text-1); }
+
+/* ── GALLERY ─────────────────────────────────────── */
+.gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.g-item { position: relative; overflow: hidden; border-radius: var(--radius-md); background: var(--bg-3); cursor: pointer; }
+.g-item img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; display: block; transition: transform 0.4s ease, filter 0.3s; filter: brightness(0.92); }
+.g-item.wide { grid-column: span 2; }
+.g-item.wide img { aspect-ratio: 16/9; }
+.g-item:hover img { transform: scale(1.03); filter: brightness(1); }
+.g-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 8px 10px; background: linear-gradient(to top, rgba(26,26,24,0.7), transparent); font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+
+/* LIGHTBOX */
+#lb { display: none; position: fixed; inset: 0; background: rgba(26,26,24,0.92); z-index: 2000; align-items: center; justify-content: center; padding: 2rem; }
+#lb.open { display: flex; }
+#lb img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: var(--radius-lg); }
+#lb-close { position: fixed; top: 1.5rem; right: 2rem; font-size: 28px; color: rgba(255,255,255,0.6); cursor: pointer; background: none; border: none; line-height: 1; }
+#lb-close:hover { color: #fff; }
+
+/* ── VIDEOS ──────────────────────────────────────── */
+.video-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.video-ph { background: var(--bg-2); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 1.5rem; }
+.video-ph svg { width: 28px; height: 28px; stroke: var(--text-3); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.video-ph-title { font-size: 13px; font-weight: 500; color: var(--text-1); text-align: center; }
+.video-ph-sub { font-size: 10px; color: var(--text-3); text-align: center; letter-spacing: 0.04em; }
+.video-embed { aspect-ratio: 16/9; }
+.video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ── NEWS ─────────────────────────────────────────── */
+.news-list { margin-top: 0.5rem; }
+.news-row { display: flex; gap: 1.25rem; padding: 0.8rem 0; border-bottom: 0.5px solid var(--border); align-items: flex-start; }
+.news-row:first-child { border-top: 0.5px solid var(--border); }
+.news-date { font-size: 10px; color: var(--text-3); min-width: 68px; flex-shrink: 0; padding-top: 3px; letter-spacing: 0.04em; }
+.news-text { font-size: 13px; color: var(--text-1); line-height: 1.55; flex: 1; }
+.news-text em { font-style: italic; color: var(--text-2); }
+.news-badge { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; margin-top: 2px; white-space: nowrap; }
+.badge-paper { background: rgba(40,140,80,0.1); color: #28703A; border: 0.5px solid rgba(40,140,80,0.25); }
+.badge-award { background: rgba(180,120,20,0.1); color: #7A5010; border: 0.5px solid rgba(180,120,20,0.3); }
+.badge-event { background: rgba(30,39,97,0.08); color: var(--accent); border: 0.5px solid rgba(30,39,97,0.2); }
+
+/* ── PROJECTS ─────────────────────────────────────── */
+.projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.proj-card { background: var(--bg); padding: 1.5rem; }
+.proj-badge { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 3px 10px; border-radius: 999px; display: inline-block; margin-bottom: 0.75rem; }
+.proj-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; font-weight: 400; color: var(--text-1); margin-bottom: 0.3rem; }
+.proj-sub { font-size: 10px; color: var(--text-3); margin-bottom: 0.65rem; letter-spacing: 0.03em; }
+.proj-body { font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
+.proj-award { margin-top: 0.6rem; font-size: 11px; color: #7A5010; font-weight: 500; }
+
+/* ── PUBLICATIONS ─────────────────────────────────── */
+.pubs-list { }
+.pub-row { display: flex; gap: 12px; padding: 0.75rem 0; border-bottom: 0.5px solid var(--border); align-items: baseline; }
+.pub-row:first-child { border-top: 0.5px solid var(--border); }
+.pub-y { font-size: 11px; color: var(--text-3); min-width: 30px; flex-shrink: 0; }
+.pub-t { font-size: 13px; color: var(--text-1); line-height: 1.55; }
+.pub-v { font-size: 11px; color: var(--text-2); font-style: italic; margin-top: 2px; }
+
+/* ── PEOPLE (hidden) ─────────────────────────────── */
+#people { display: none; }
+
+/* ── JOIN US ─────────────────────────────────────── */
+.joinus-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+.joinus-text p { font-size: 14px; color: var(--text-2); line-height: 1.8; margin-bottom: 1rem; }
+.joinus-roles { display: flex; flex-direction: column; gap: 0.75rem; }
+.joinus-role { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; background: var(--bg-2); }
+.joinus-role-title { font-size: 13px; font-weight: 500; color: var(--text-1); margin-bottom: 0.35rem; }
+.joinus-role-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+.joinus-cta { display: inline-block; margin-top: 1.5rem; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 0.7rem 1.75rem; border-radius: 999px; text-decoration: none; transition: opacity 0.2s; }
+.joinus-cta:hover { opacity: 0.85; }
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-top: 1rem; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-weight: 400; color: var(--text-1); margin-bottom: 0.4rem; }
+.footer-sub { font-size: 12px; color: var(--text-2); line-height: 1.6; max-width: 260px; }
+.footer-col-title { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
+.footer-col a, .footer-col p { display: block; font-size: 12px; color: var(--text-2); text-decoration: none; margin-bottom: 0.4rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--text-1); }
+.footer-bottom { padding-top: 1.5rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.footer-copy { font-size: 10px; color: var(--text-3); }
+.status { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-3); letter-spacing: 0.04em; }
+.status-dot { width: 6px; height: 6px; background: #3DDB85; border-radius: 50%; }
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 680px) {
+  .pillars-grid, .stat-row, .infra-cats, .projects-grid, .video-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .g-item.wide { grid-column: span 2; }
+  .joinus-inner { grid-template-columns: 1fr; gap: 2rem; }
+  footer { grid-template-columns: 1fr; gap: 1.5rem; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<nav id="top">
+  <a class="nav-logo" href="#top">Field Robotics and Perception Lab <span>· Sant'Anna</span></a>
+  <div class="nav-links">
+    <a href="#pillars">Research</a>
+    <a href="#news">News</a>
+    <a href="#projects">Projects</a>
+    <a href="#publications">Publications</a>
+    <a href="#joinus">Join Us</a>
+  </div>
+  <a class="nav-cta" href="mailto:massimo.satler@santannapisa.it">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">Scuola Superiore Sant'Anna · Pisa, Italy</div>
+  <h1 class="hero-title">Autonomous aerial &amp;<br><em>terrestrial robotics</em><br>for inspection &amp; monitoring</h1>
+  <p class="hero-sub">Custom micro aerial vehicles, heterogeneous multi-agent systems, and onboard edge computing — from algorithm design to flight-tested indoor deployment, validated with ground truth.</p>
+  <div class="hero-tags">
+    <span class="tag">ROS 2 · PX4</span>
+    <span class="tag">VICON motion capture</span>
+    <span class="tag">Edge inference</span>
+    <span class="tag">GNSS-denied autonomy</span>
+    <span class="tag">Multi-agent systems</span>
+    <span class="tag">Horizon Europe</span>
+  </div>
+  <a class="hero-cta" href="#pillars">Explore our research ↓</a>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="slabel">Research areas</div>
+  <h2 class="section-title">Four pillars of <em>autonomous robotics</em></h2>
+  <div class="pillars-grid">
+
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div>
+          <div class="pillar-num">01 — Autonomous Exploration &amp; SLAM</div>
+          <div class="pillar-title">Navigate the unknown, map as you go</div>
+          <div class="pillar-summary">SLAM algorithms and autonomous exploration strategies for unknown environments — indoor and outdoor, GPS-denied — with a focus on target-oriented search for Search and Rescue (SaR) missions.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Active exploration combines SLAM with navigation strategies where the robot autonomously decides where to move to maximise information gain. Current directions include Semantic SLAM, Lifelong SLAM, Deep SLAM, and Multi-Agent Cooperative SLAM (C-SLAM). Key challenges: temporal efficiency, map completeness, target localisation, and onboard computational constraints.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Search and rescue in unknown 3D environments; autonomous indoor exploration with reduced coverage time; UAV, UGV, and AUV operations in GPS-denied areas; augmented reality with precise spatial tracking.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Learning Heuristics for Efficient Environment Exploration Using GNN — ICAR 2023</li>
+              <li>GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning — RA-L 2022</li>
+              <li>An Efficient Object-Oriented Exploration Algorithm for UAVs — ICUAS 2021</li>
+              <li>An Efficient Framework for Autonomous UAV Missions in GNSS-Denied Environments — Drones 2023</li>
+              <li>Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance — JIRS 2024</li>
+              <li>Autonomous Exploration of Indoor Environments with a MAV — RED-UAS 2015</li>
+              <li>A Lightweight SLAM Algorithm for Indoor Autonomous Navigation — ACRA 2014</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>Autonomous indoor flight demo — video coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div>
+          <div class="pillar-num">02 — Heterogeneous Multi-Agent Cooperation</div>
+          <div class="pillar-title">UAV meets UGV, missions multiply</div>
+          <div class="pillar-summary">Coordination of autonomous agents with different structures and capabilities — combining aerial and ground robots to collaboratively achieve complex missions that neither could accomplish alone.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Key research directions include Multi-Agent Reinforcement Learning (MARL) for decentralised sequential decision-making, and Vision-Language Models (VLMs) for fine-grained visual reasoning in cooperative tasks. Open challenges remain in heterogeneous cooperation, particularly in scenarios requiring detailed visual understanding and emergent compositional cooperation patterns.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Hierarchical task planning across heterogeneous agents; multi-objective optimisation for collaborative task allocation; joint aerial-ground exploration for search and rescue; GNSS-denied cooperative localisation — validated at the Leonardo Drone Contest 2023 (1st place).</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment — ERF 2025</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>Multi-agent cooperative mission — video coming soon</div>
+            <div class="pillar-media"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>Leonardo Drone Contest 2023 — winning run — video coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div>
+          <div class="pillar-num">03 — Infrastructure Inspection</div>
+          <div class="pillar-title">Into confined spaces, beyond human reach</div>
+          <div class="pillar-summary">Autonomous UAVs for inspection of bridges, buildings, industrial plants, and confined spaces — detecting structural defects automatically, without exposing operators to hazardous environments.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Research integrates AI-enhanced drone methodology with consumer-grade cameras and open-source software for automated defect detection. For 3D reconstruction, we deploy <a href="https://github.com/hku-mars/fast-livo2" target="_blank" rel="noopener" style="color:var(--accent)">FastLIVO2</a> — a LiDAR-Inertial-Visual odometry system — onboard our platforms, enabling dense real-time mapping of complex structures.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Inspection of bridges, dams, and buildings in remote or hazardous locations; industrial plant inspection in boilers and confined spaces; 3D structural reconstruction for digital twin generation; critical infrastructure monitoring without human risk exposure.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Confined Spaces Industrial Inspection with MAV and Laser Range Finder Localization — Int. J. Micro Air Vehicles 2018</li>
+              <li>Towards an Autonomous Flying Robot for Inspections in Open and Constrained Spaces — SSD 2014</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>Infrastructure inspection demo — video coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div>
+          <div class="pillar-num">04 — Environmental Monitoring</div>
+          <div class="pillar-title">Wide-scale sensing, where humans cannot go</div>
+          <div class="pillar-summary">Aerial and ground robotic systems for large-scale periodic monitoring of natural and agricultural environments — collecting data in areas that are remote, hazardous, or impractical to survey manually.</div>
+        </div>
+        <div class="pillar-toggle">+</div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-body-inner">
+          <div class="pillar-block">
+            <div class="pillar-block-title">Scientific highlights</div>
+            <p>Research spans remote sensing with UAV platforms equipped with multispectral, thermal, and LiDAR sensors; autonomous data collection pipelines for precision agriculture; and photogrammetry-based territorial mapping for environmental change assessment. We also explore autonomous aerial systems in complex cultivation environments — woodland and orchard settings — where GPS coverage is limited and canopy structure requires adaptive flight strategies.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Practical applications</div>
+            <p>Precision agriculture and crop monitoring with farm robotics; mapping and assessment of remote or contaminated areas; photogrammetric territorial surveys; environmental monitoring in the context of the national Agritech PNRR partnership.</p>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Related publications</div>
+            <ul class="pillar-pubs">
+              <li>Towards Smart Farming and Sustainable Agriculture with Drones — Intelligent Environments 2015</li>
+            </ul>
+          </div>
+          <div class="pillar-block">
+            <div class="pillar-block-title">Media</div>
+            <div class="pillar-media"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>Environmental monitoring demo — video coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE -->
+<section id="infrastructure">
+  <div class="slabel">Physical infrastructure</div>
+  <h2 class="section-title">Indoor arena &amp; <em>platform fleet</em></h2>
+  <div class="stat-row">
+    <div class="stat"><div class="stat-n">10</div><div class="stat-l">VICON Vero cameras</div><div class="stat-s">4×6×3 m · 1 mm · 333 Hz</div></div>
+    <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Autonomous UAVs</div><div class="stat-s">custom &amp; multi-sensor</div></div>
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Ground robots</div><div class="stat-s">Husky A200 · Unitree Go2</div></div>
+    <div class="stat"><div class="stat-n">GPU</div><div class="stat-l">Onboard compute</div><div class="stat-s">NUC · Jetson Orin NX</div></div>
+  </div>
+  <div class="infra-cats">
+    <div class="cat">
+      <div class="cat-h">UAV fleet</div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>2× custom 7" quad</strong> · ROS 2, x86 companion computer</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>X500 + Intel NUC</strong> · LiDAR Ouster OS0-32, FLIR Boson 640, OAK-D stereo</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Edge inference UAV</strong> · NVIDIA Jetson Orin NX onboard</span></div>
+    </div>
+    <div class="cat">
+      <div class="cat-h">Motion capture arena</div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>VICON Vero</strong> · 10 cameras + Vicon Lock system</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>3× FLIR RGB</strong> · complementary visual coverage</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>1 mm accuracy · 333 Hz</strong> · 6-DoF ground-truth pose</span></div>
+    </div>
+    <div class="cat">
+      <div class="cat-h">Ground platforms</div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Clearpath Husky A200</strong> · UGV, all-terrain, ROS 2</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Unitree Go2 EDU Plus</strong> · quadruped, Jetson Orin NX, 4D LiDAR</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Kinova Gen3 7DoF</strong> · arm for mobile manipulation on Husky</span></div>
+    </div>
+    <div class="cat">
+      <div class="cat-h">Compute</div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Lab workstation</strong> · GPU cluster for training &amp; simulation</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>Multiple embedded x86</strong> · edge deployment nodes</span></div>
+      <div class="ci"><span class="ci-d">–</span><span><strong>NVIDIA Jetson Orin NX</strong> · onboard inference platform</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="slabel">Platforms &amp; field activity</div>
+  <h2 class="section-title">Research <em>in the real world</em></h2>
+  <div class="gallery-grid">
+    <div class="g-item wide" onclick="openLb(this)">
+      <img src="img/drone_fleet.jpg" alt="Custom UAV fleet">
+      <div class="g-caption">Custom UAV fleet — micro, mid-size and large multi-rotor platforms</div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/drone_custom_large.jpg" alt="Custom MAV with VICON markers">
+      <div class="g-caption">Custom MAV — VICON markers + onboard compute</div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/drone_custom_stereo.jpg" alt="Custom quad with stereo camera">
+      <div class="g-caption">Custom quad — depth + stereo for GNSS-denied nav</div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/drone_custom_compact.jpg" alt="Compact custom quad">
+      <div class="g-caption">Compact custom quad — x86 companion computer</div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/ldc_award.jpg" alt="LDC 2023 award">
+      <div class="g-caption">LDC 2023 — 1° Classificato</div>
+    </div>
+    <div class="g-item wide" onclick="openLb(this)">
+      <img src="img/ldc_action.jpg" alt="LDC in action">
+      <div class="g-caption">LDC in action — heterogeneous UAV + UGV autonomous mission</div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/ldc_banner.jpg" alt="LDC banner">
+      <div class="g-caption">Leonardo Drone Contest — open innovation challenge</div>
+    </div>
+  </div>
+</section>
+
+<div id="lb" onclick="closeLb()">
+  <button id="lb-close" onclick="closeLb()">&times;</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="slabel">Video demonstrations</div>
+  <h2 class="section-title">Research <em>in motion</em></h2>
+  <div class="video-grid">
+    <div class="video-ph">
+      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <div class="video-ph-title">Autonomous indoor flight</div>
+      <div class="video-ph-sub">GNSS-denied exploration · YouTube link to be added</div>
+    </div>
+    <div class="video-ph">
+      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <div class="video-ph-title">Multi-agent cooperative mission</div>
+      <div class="video-ph-sub">UAV + UGV heterogeneous team · YouTube link to be added</div>
+    </div>
+    <div class="video-ph">
+      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <div class="video-ph-title">Leonardo Drone Contest 2023</div>
+      <div class="video-ph-sub">Winning run · YouTube link to be added</div>
+    </div>
+    <div class="video-ph">
+      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <div class="video-ph-title">Infrastructure inspection</div>
+      <div class="video-ph-sub">MAV confined-space demo · YouTube link to be added</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="slabel">Latest updates</div>
+  <h2 class="section-title">News &amp; <em>achievements</em></h2>
+  <div class="news-list">
+    <div class="news-row"><span class="news-date">2026</span><span class="news-text">Paper accepted — <em>Autonomous UAVs as Rescue Agents: Blink Detection for Human-State-Aware Survivor Localization</em> · Drones, MDPI vol.10</span><span class="news-badge badge-paper">Paper</span></div>
+    <div class="news-row"><span class="news-date">2025</span><span class="news-text">Paper accepted — <em>Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment</em> · European Robotics Forum, Springer</span><span class="news-badge badge-paper">Paper</span></div>
+    <div class="news-row"><span class="news-date">2025</span><span class="news-text">Paper accepted — <em>Augmented Reality in the DESIRE6G Cloud-native Infrastructure with Multi-Agent System</em> · IEEE CSCN 2025</span><span class="news-badge badge-paper">Paper</span></div>
+    <div class="news-row"><span class="news-date">Sep 2024</span><span class="news-text">Leonardo Drone Contest 2024 — participation · cycle 2023–2025</span><span class="news-badge badge-event">Event</span></div>
+    <div class="news-row"><span class="news-date">2024</span><span class="news-text">Paper accepted — <em>Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance and Payload Delivery</em> · J. Intelligent &amp; Robotic Systems, Springer</span><span class="news-badge badge-paper">Paper</span></div>
+    <div class="news-row"><span class="news-date">Sep 2023</span><span class="news-text">🏆 <strong>Leonardo Drone Contest 2023 — 1st place</strong> · Team Sant'Anna · GNSS-denied cooperative localisation with heterogeneous UAV + UGV</span><span class="news-badge badge-award">Award</span></div>
+    <div class="news-row"><span class="news-date">Sep 2023</span><span class="news-text">Leonardo Drone Contest 2023 — participation · cycle 2023–2025, founding session</span><span class="news-badge badge-event">Event</span></div>
+    <div class="news-row"><span class="news-date">2023</span><span class="news-text">Paper accepted — <em>An Efficient Framework for Autonomous UAV Missions in Partially-Unknown GNSS-Denied Environments</em> · Drones, MDPI vol.7</span><span class="news-badge badge-paper">Paper</span></div>
+    <div class="news-row"><span class="news-date">Sep 2022</span><span class="news-text">Leonardo Drone Contest 2022 — participation · cycle 2021–2023</span><span class="news-badge badge-event">Event</span></div>
+    <div class="news-row"><span class="news-date">Jun 2022</span><span class="news-text">🥉 <strong>ICUAS 2022 UAV Competition — 3rd place</strong> · Team SantDrone · Dubrovnik, Croatia</span><span class="news-badge badge-award">Award</span></div>
+    <div class="news-row"><span class="news-date">Sep 2021</span><span class="news-text">Leonardo Drone Contest 2021 — participation · founding edition · cycle 2021–2023</span><span class="news-badge badge-event">Event</span></div>
+    <div class="news-row"><span class="news-date">2021</span><span class="news-text">🏅 <strong>Finalist — OpenCV Spatial AI Contest 2021</strong></span><span class="news-badge badge-award">Award</span></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="slabel">Funded projects</div>
+  <h2 class="section-title">European &amp; national <em>partnerships</em></h2>
+  <div class="projects-grid">
+    <div class="proj-card">
+      <span class="proj-badge">Horizon Europe</span>
+      <div class="proj-title">DESIRE6G</div>
+      <div class="proj-sub">G.A. 101096466 · SNS JU · 2023–2024</div>
+      <p class="proj-body">Deep programmability and secure distributed AI for real-time 6G networks. Contribution: autonomous UAV testbed integrated in cloud-native 6G infrastructure.</p>
+    </div>
+    <div class="proj-card">
+      <span class="proj-badge">Horizon Europe</span>
+      <div class="proj-title">6G-LEADER</div>
+      <div class="proj-sub">G.A. 101192080 · 18 partners · ongoing</div>
+      <p class="proj-body">Learning-driven evolved radio for 6G. Contribution: dataset collection and design of autonomous drone platform for experimental 6G test activities.</p>
+    </div>
+    <div class="proj-card">
+      <span class="proj-badge">PNRR</span>
+      <div class="proj-title">Agritech</div>
+      <div class="proj-sub">Partenariato Nazionale · Italy</div>
+      <p class="proj-body">National agricultural technologies partnership. SSSA contributes autonomous aerial and terrestrial robotic systems for precision agriculture and monitoring.</p>
+    </div>
+    <div class="proj-card">
+      <span class="proj-badge">National Award</span>
+      <div class="proj-title">Leonardo Drone Contest</div>
+      <div class="proj-sub">Cycles 2021–2023 · 2023–2025</div>
+      <p class="proj-body">Cooperative autonomous localisation among heterogeneous UAV + UGV teams in unknown, GNSS-denied environments.</p>
+      <div class="proj-award">🏆 1° Classificato — Sessione 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="slabel">Selected publications</div>
+  <h2 class="section-title">Peer-reviewed <em>output</em></h2>
+  <div class="pubs-list">
+    <div class="pub-row"><span class="pub-y">2026</span><div><div class="pub-t">Autonomous UAVs as Rescue Agents: Blink Detection for Human-State-Aware Survivor Localization</div><div class="pub-v">Drones, MDPI · vol.10 n.6 — Tripicchio, Herrera-Alarcón, Bagheri, Avizzano, Satler</div></div></div>
+    <div class="pub-row"><span class="pub-y">2026</span><div><div class="pub-t">Artificial Intelligence and Digital Twins Applications in Industry 4.0 and 5.0</div><div class="pub-v">IntechOpen — Tripicchio, Satler, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2025</span><div><div class="pub-t">Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment</div><div class="pub-v">European Robotics Forum · Springer — Mugnai, Satler, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2025</span><div><div class="pub-t">Augmented Reality in the DESIRE6G Cloud-native Infrastructure with Multi-Agent System</div><div class="pub-v">IEEE CSCN 2025 — Paolucci et al.</div></div></div>
+    <div class="pub-row"><span class="pub-y">2024</span><div><div class="pub-t">Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance and Payload Delivery</div><div class="pub-v">J. Intelligent &amp; Robotic Systems · Springer — Mugnai, Teppati Losè, Satler, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2023</span><div><div class="pub-t">An Efficient Framework for Autonomous UAV Missions in Partially-Unknown GNSS-Denied Environments</div><div class="pub-v">Drones, MDPI · vol.7 — Mugnai, Teppati Losè, Herrera-Alarcón, Baris, Satler, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2023</span><div><div class="pub-t">Learning Heuristics for Efficient Environment Exploration Using Graph Neural Networks</div><div class="pub-v">ICAR 2023 · IEEE — Herrera-Alarcón, Baris, Satler, Avizzano, Loianno</div></div></div>
+    <div class="pub-row"><span class="pub-y">2022</span><div><div class="pub-t">GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning</div><div class="pub-v">IEEE Robotics and Automation Letters — Herrera-Alarcón, Satler, Vannucci, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2021</span><div><div class="pub-t">An Efficient Object-Oriented Exploration Algorithm for Unmanned Aerial Vehicles</div><div class="pub-v">ICUAS 2021 · IEEE — Alarcón, Ghavifekr, Baris, Mugnai, Satler, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2018</span><div><div class="pub-t">Confined Spaces Industrial Inspection with MAV and Laser Range Finder Localization</div><div class="pub-v">Int. Journal of Micro Air Vehicles · SAGE — Tripicchio, Satler, Unetti, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2015</span><div><div class="pub-t">Autonomous Exploration of Indoor Environments with a Micro-Aerial Vehicle</div><div class="pub-v">RED-UAS 2015 · IEEE — Pepe, Satler, Tripicchio</div></div></div>
+    <div class="pub-row"><span class="pub-y">2015</span><div><div class="pub-t">Towards Smart Farming and Sustainable Agriculture with Drones</div><div class="pub-v">Intelligent Environments 2015 · IEEE — Tripicchio, Satler, Dabisias, Ruffaldi, Avizzano</div></div></div>
+    <div class="pub-row"><span class="pub-y">2014</span><div><div class="pub-t">Towards an Autonomous Flying Robot for Inspections in Open and Constrained Spaces</div><div class="pub-v">SSD 2014 · IEEE — Satler, Unetti, Giordani, Avizzano, Tripicchio</div></div></div>
+    <div class="pub-row"><span class="pub-y">2014</span><div><div class="pub-t">A Lightweight SLAM Algorithm for Indoor Autonomous Navigation</div><div class="pub-v">ACRA 2014 — Tripicchio, Unetti, Giordani, Avizzano, Satler</div></div></div>
+  </div>
+</section>
+
+<!-- PEOPLE (hidden — TODO) -->
+<!-- TODO: aggiungere foto e bio team quando disponibili
+     Membri: Massimo Satler, Matteo Unetti, Giulia Bassani, Carlo Alberto Avizzano
+     Per rendere visibile: rimuovere display:none dal CSS #people -->
+<section id="people">
+  <div class="slabel">The team</div>
+  <h2 class="section-title">People &amp; <em>collaborators</em></h2>
+  <p style="color:var(--text-2);font-size:14px;">Team profiles coming soon.</p>
+</section>
+
+<!-- JOIN US -->
+<section id="joinus">
+  <div class="slabel">Join the lab</div>
+  <h2 class="section-title">Work with us on <em>autonomous robotics</em></h2>
+  <div class="joinus-inner">
+    <div class="joinus-text">
+      <p>We are always looking for motivated students and researchers who want to work on real autonomous systems — not just simulations. Our lab offers hands-on experience with custom UAVs, ground robots, and state-of-the-art sensing in a well-equipped indoor arena.</p>
+      <p>We work at the intersection of aerial robotics, SLAM, multi-agent systems, and edge computing. If you are passionate about making robots fly, navigate, and cooperate autonomously, we want to hear from you.</p>
+      <p>We welcome applications from Master's students (thesis projects), PhD candidates, and visiting researchers. Experience with ROS 2, PX4, Python, or C++ is a plus — curiosity and rigour are essential.</p>
+      <a class="joinus-cta" href="mailto:massimo.satler@santannapisa.it">Send your application →</a>
+    </div>
+    <div class="joinus-roles">
+      <div class="joinus-role">
+        <div class="joinus-role-title">Master's Thesis Students</div>
+        <div class="joinus-role-desc">6–12 month projects on UAV autonomy, SLAM, multi-agent systems, or edge inference. Possibility of co-authoring publications.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">PhD Candidates</div>
+        <div class="joinus-role-desc">We occasionally open PhD positions funded through EU projects (Horizon Europe). Contact us with your CV and research interests.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">Visiting Researchers</div>
+        <div class="joinus-role-desc">Short-term visits for collaboration on joint research topics. Open to bilateral exchanges with EU institutions.</div>
+      </div>
+      <div class="joinus-role">
+        <div class="joinus-role-title">EU Project Partners</div>
+        <div class="joinus-role-desc">Looking for a technical partner with flight-tested UAV expertise for a Horizon Europe proposal? Get in touch.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Field Robotics and Perception Lab</div>
+    <p class="footer-sub">Istituto di Intelligenza Meccanica · Scuola Superiore Sant'Anna · Pisa, Italy. Open to Horizon Europe partnerships on autonomous indoor aerial robotics.</p>
+  </div>
+  <div class="footer-col">
+    <div class="footer-col-title">Research</div>
+    <a href="#pillars">Pillars</a>
+    <a href="#infrastructure">Infrastructure</a>
+    <a href="#publications">Publications</a>
+  </div>
+  <div class="footer-col">
+    <div class="footer-col-title">Contact</div>
+    <a href="mailto:massimo.satler@santannapisa.it">massimo.satler@santannapisa.it</a>
+    <a href="https://scholar.google.com/citations?user=BJVasGYAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+    <a href="https://biorob-hub.eu/infrastructures/wp6/terra-terrestrial-and-aerial-robotics-for-large-infrastructures-and-environment-monitoring/" target="_blank" rel="noopener">TERRA Lab — BRIEF</a>
+  </div>
+</footer>
+<div class="footer-bottom" style="max-width:var(--max);margin:0 auto;padding:0 2rem 2rem;">
+  <span class="footer-copy">© 2026 Field Robotics and Perception Lab · Scuola Superiore Sant'Anna</span>
+  <div class="status"><div class="status-dot"></div>System operational</div>
+</div>
+
+</div><!-- .page -->
+
+<script>
+function togglePillar(card) {
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.pillar-card.open').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+function openLb(el) {
+  document.getElementById('lb-img').src = el.querySelector('img').src;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
