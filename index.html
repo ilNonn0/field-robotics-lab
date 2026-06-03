@@ -736,11 +736,11 @@ section { padding: 7rem 6vw; }
 
 /* ── PILLARS ACCORDION ───────────────────────────────── */
 #pillars { background: var(--obsidian); }
-.pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border, rgba(26,26,24,0.12)); border: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-radius: var(--radius-lg, 12px); overflow: hidden; }
+.pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; border: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-radius: var(--radius-lg, 12px); overflow: visible; }
 .pillar-card {
   border: 1px solid rgba(201,168,76,0.15);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: visible;
   transition: border-color 0.3s;
 }
 .pillar-card:hover { border-color: rgba(201,168,76,0.35); }
@@ -820,11 +820,10 @@ section { padding: 7rem 6vw; }
   color: var(--text-muted);
   padding: 4px 0;
   border-bottom: 1px solid rgba(255,255,255,0.05);
-  line-height: 1.5;
-  display: flex;
-  gap: 8px;
+  line-height: 1.6;
+  display: block;
 }
-.pillar-pubs li::before { content: '—'; color: var(--champ-dim); flex-shrink: 0; }
+.pillar-pubs li::before { content: ''; }
 .pillar-pubs li:last-child { border-bottom: none; }
 .pillar-media {
   display: flex;
@@ -934,20 +933,31 @@ section { padding: 7rem 6vw; }
 .joinus-cta:hover { transform: scale(1.03); background: #d4af52; }
 
 @media (max-width: 768px) {
-  .pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border, rgba(26,26,24,0.12)); border: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-radius: var(--radius-lg, 12px); overflow: hidden; }
+  .pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; border: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-radius: var(--radius-lg, 12px); overflow: visible; }
   .joinus-inner { grid-template-columns: 1fr; gap: 2rem; }
 }
 @keyframes drone-float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-14px); }
 }
-  .pillar-expand-zone .pillar-body-inner { grid-template-columns: 1fr; }
 }
 
 /* ── PILLAR SCROLL ───────────────────────────────── */
 .pillar-body::-webkit-scrollbar { width: 4px; }
 .pillar-body::-webkit-scrollbar-track { background: transparent; }
 .pillar-body::-webkit-scrollbar-thumb { background: var(--border-2, rgba(26,26,24,0.22)); border-radius: 2px; }
+
+/* ── PILLAR CARD BORDERS ─────────────────────────── */
+.pillar-card { border-right: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-bottom: 0.5px solid var(--border, rgba(26,26,24,0.12)); }
+.pillar-card:nth-child(even) { border-right: none; }
+.pillar-card:nth-last-child(-n+2) { border-bottom: none; }
+
+/* ── STAT / CAT BORDERS ─────────────────────────── */
+.stat { border-right: 0.5px solid rgba(201,168,76,0.15); }
+.stat:last-child { border-right: none; }
+.cat { border-right: 0.5px solid rgba(201,168,76,0.15); border-top: 0.5px solid rgba(201,168,76,0.15); }
+.cat:nth-child(even) { border-right: none; }
+.cat:nth-child(1), .cat:nth-child(2) { border-top: none; }
 </style>
 </head>
 <body>
@@ -1012,13 +1022,13 @@ section { padding: 7rem 6vw; }
           <div class="pillar-block">
             <div class="pillar-block-title">Related publications</div>
             <ul class="pillar-pubs"class="pillar-pubs"class="pillar-pubs">
-              <li>E. P. Herrera-Alarcón, G. Baris, M. Satler, C. A. Avizzano, and G. Loianno, <strong>"Learning Heuristics for Efficient Environment Exploration Using Graph Neural Networks,"</strong> in <em>Proc. ICAR</em>, 2023.</li>
-              <li>E. P. Herrera-Alarcón, M. Satler, M. Vannucci, and C. A. Avizzano, <strong>"GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning,"</strong> <em>IEEE Robot. Autom. Lett.</em>, 2022.</li>
-              <li>E. P. Herrera-Alarcón, D. Bagheri Ghavifekr, G. Baris, M. Mugnai, M. Satler, and C. A. Avizzano, <strong>"An Efficient Object-Oriented Exploration Algorithm for Unmanned Aerial Vehicles,"</strong> in <em>Proc. ICUAS</em>, 2021.</li>
-              <li>M. Mugnai, M. Teppati Losè, E. P. Herrera-Alarcón, G. Baris, M. Satler, and C. A. Avizzano, <strong>"An Efficient Framework for Autonomous UAV Missions in Partially-Unknown GNSS-Denied Environments,"</strong> <em>Drones</em>, vol. 7, no. 7, 2023.</li>
-              <li>M. Mugnai, M. Teppati Losè, M. Satler, and C. A. Avizzano, <strong>"Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance and Payload Delivery,"</strong> <em>J. Intell. Robot. Syst.</em>, vol. 110, 2024.</li>
-              <li>G. Pepe, M. Satler, and P. Tripicchio, <strong>"Autonomous Exploration of Indoor Environments with a Micro-Aerial Vehicle,"</strong> in <em>Proc. RED-UAS</em>, 2015.</li>
-              <li>P. Tripicchio, M. Unetti, N. Giordani, C. A. Avizzano, and M. Satler, <strong>"A Lightweight SLAM Algorithm for Indoor Autonomous Navigation,"</strong> in <em>Proc. ACRA</em>, 2014.</li>
+              <li>Herrera-Alarcón et al., "Learning Heuristics for Efficient Environment Exploration Using Graph Neural Networks," Proc. ICAR, 2023.</li>
+              <li>Herrera-Alarcón et al., "GNGraph: Self-Organizing Maps for Autonomous Aerial Vehicle Planning," IEEE Robot. Autom. Lett., 2022.</li>
+              <li>Herrera-Alarcón et al., "An Efficient Object-Oriented Exploration Algorithm for Unmanned Aerial Vehicles," Proc. ICUAS, 2021.</li>
+              <li>Mugnai et al., "An Efficient Framework for Autonomous UAV Missions in Partially-Unknown GNSS-Denied Environments," Drones, vol. 7, 2023.</li>
+              <li>Mugnai et al., "Towards Autonomous Firefighting UAVs: Online Planners for Obstacle Avoidance and Payload Delivery," J. Intell. Robot. Syst., 2024.</li>
+              <li>Pepe et al., "Autonomous Exploration of Indoor Environments with a Micro-Aerial Vehicle," Proc. RED-UAS, 2015.</li>
+              <li>Tripicchio et al., "A Lightweight SLAM Algorithm for Indoor Autonomous Navigation," Proc. ACRA, 2014.</li>
             </ul>
           </div>
           <div class="pillar-block">
@@ -1063,7 +1073,7 @@ section { padding: 7rem 6vw; }
           <div class="pillar-block">
             <div class="pillar-block-title">Related publications</div>
             <ul class="pillar-pubs"class="pillar-pubs"class="pillar-pubs">
-              <li>M. Mugnai, M. Satler, and C. A. Avizzano, <strong>"Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment,"</strong> in <em>European Robotics Forum</em>, Springer, 2025.</li>
+              <li>Mugnai et al., "Heterogeneous Multi-robot Systems Cooperative Exploration of Unknown Environment," European Robotics Forum, Springer, 2025.</li>
             </ul>
           </div>
           <div class="pillar-block">
@@ -1102,8 +1112,8 @@ section { padding: 7rem 6vw; }
           <div class="pillar-block">
             <div class="pillar-block-title">Related publications</div>
             <ul class="pillar-pubs"class="pillar-pubs"class="pillar-pubs">
-              <li>P. Tripicchio, M. Satler, M. Unetti, and C. A. Avizzano, <strong>"Confined Spaces Industrial Inspection with Micro Aerial Vehicles and Laser Range Finder Localization,"</strong> <em>Int. J. Micro Air Veh.</em>, vol. 10, no. 2, 2018.</li>
-              <li>M. Satler, M. Unetti, N. Giordani, C. A. Avizzano, and P. Tripicchio, <strong>"Towards an Autonomous Flying Robot for Inspections in Open and Constrained Spaces,"</strong> in <em>Proc. IEEE SSD</em>, 2014.</li>
+              <li>Tripicchio et al., "Confined Spaces Industrial Inspection with Micro Aerial Vehicles and Laser Range Finder Localization," Int. J. Micro Air Veh., 2018.</li>
+              <li>Satler et al., "Towards an Autonomous Flying Robot for Inspections in Open and Constrained Spaces," Proc. IEEE SSD, 2014.</li>
             </ul>
           </div>
           <div class="pillar-block">
@@ -1138,7 +1148,7 @@ section { padding: 7rem 6vw; }
           <div class="pillar-block">
             <div class="pillar-block-title">Related publications</div>
             <ul class="pillar-pubs"class="pillar-pubs"class="pillar-pubs">
-              <li>P. Tripicchio, M. Satler, G. Dabisias, E. Ruffaldi, and C. A. Avizzano, <strong>"Towards Smart Farming and Sustainable Agriculture with Drones,"</strong> in <em>Proc. Intell. Environ.</em>, 2015.</li>
+              <li>Tripicchio et al., "Towards Smart Farming and Sustainable Agriculture with Drones," Proc. Intell. Environ., 2015.</li>
             </ul>
           </div>
           <div class="pillar-block">
@@ -1152,8 +1162,6 @@ section { padding: 7rem 6vw; }
       </div>
     </div>
   </div>
-  <div class="pillar-expand-zone"></div>
-</div>
 </section>
 
 <!-- FEATURES -->
