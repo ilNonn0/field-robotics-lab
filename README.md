@@ -13,18 +13,18 @@ This repository hosts the website of the **Field Robotics and Perception Lab**, 
 | File | Description |
 |------|-------------|
 | `index.html` | Cinematic version — Midnight Luxe dark theme, GSAP animations |
-| `classic.html` | Static refined version — DM Serif/Sans, no animations |
+| `classic.html` | Static refined version — DM Serif/Sans, dark mode toggle, no external JS dependencies |
 | `index_embedded.html` | Standalone version — all images embedded as base64 |
-| `img/` | Photo assets (drone fleet, LDC competition, custom MAVs) |
+| `img/` | 15 photo assets (drone fleet, LDC competition, SLAM, edge computing, FastLIVO2) |
 
 ---
 
 ## Research pillars
 
-1. **Autonomous Exploration & SLAM** — lightweight SLAM and GNN-based planners for unknown, GNSS-denied environments, with focus on Search and Rescue applications
-2. **Heterogeneous Multi-Agent Cooperation** — coordinated UAV + UGV missions, task allocation, decentralised decisions — validated at Leonardo Drone Contest 2023 (1st place)
-3. **Infrastructure Inspection** — autonomous MAV missions in confined spaces and civil structures, 3D reconstruction with FastLIVO2
-4. **Environmental Monitoring** — aerial and ground platforms for large-scale periodic monitoring of natural and agricultural environments
+1. **Autonomous Exploration & SLAM** — SLAM algorithms and GNN-based planners for unknown, GNSS-denied environments, with focus on Search and Rescue. Videos: object-oriented exploration, OpenCV 2021 demo.
+2. **Heterogeneous Multi-Agent Cooperation** — coordinated UAV + UGV missions, task allocation, decentralised decisions — validated at Leonardo Drone Contest 2023 (1st place). Video: LDC 2023 official teaser.
+3. **Infrastructure Inspection** — autonomous MAV missions in confined spaces and civil structures, 3D reconstruction with FastLIVO2. Videos: ENEL boiler inspection, FastLIVO2 building reconstruction.
+4. **Environmental Monitoring** — aerial and ground platforms for large-scale periodic monitoring of natural and agricultural environments.
 
 ---
 
@@ -43,9 +43,9 @@ This repository hosts the website of the **Field Robotics and Perception Lab**, 
 
 | Project | Programme | Role |
 |---------|-----------|------|
-| DESIRE6G (G.A. 101096466) | Horizon Europe · SNS JU | Autonomous UAV testbed for 6G infrastructure |
-| 6G-LEADER (G.A. 101192080) | Horizon Europe | Dataset collection + drone platform design |
-| Leonardo Drone Contest | National · Leonardo S.p.A. | **Winner 2023** (cycle 2) — drone + rover with PTZ camera · GNSS-denied cooperative localisation |
+| DESIRE6G (G.A. 101096466) | Horizon Europe · SNS JU · 2023–2024 | Autonomous UAV testbed for 6G infrastructure |
+| 6G-LEADER (G.A. 101192080) | Horizon Europe · ongoing | Dataset collection + drone platform design |
+| Leonardo Drone Contest | National · Leonardo S.p.A. | **Winner 2023** (cycle 2) — heterogeneous drone + rover + fixed camera cooperation |
 | Agritech | PNRR · Partenariato Nazionale | Aerial & terrestrial robots for precision agriculture |
 
 ---
@@ -55,6 +55,23 @@ This repository hosts the website of the **Field Robotics and Perception Lab**, 
 - 🏆 **1st place — Leonardo Drone Contest 2023** · Team Sant'Anna · cycle 2 (2023–2025)
 - 🥉 **3rd place — ICUAS 2022 UAV Competition** · Team SantDrone · Dubrovnik
 - 🏅 **Finalist — OpenCV Spatial AI Contest 2021**
+- Participant LDC since founding edition (Sep 2020) — both cycles 2020–2022 and 2023–2025
+- European Robotics Forum: Stuttgart 2025, Stavanger 2026
+
+---
+
+## Videos embedded
+
+| Location | Video | ID |
+|----------|-------|----|
+| Pillar 01 | Object-oriented Autonomous Exploration | `NgcgkBRf8Yk` |
+| Pillar 01 | OpenCV Spatial AI Contest 2021 | `7JpW1TOA3Dg` |
+| Pillar 02 | LDC 2023 Official Teaser | `nEszhMOSrFM` |
+| Pillar 03 | Enel Copter — Industrial boiler inspection | `EaIgN363v3Q` |
+| Pillar 03 | SLAM & 3D reconstruction with FastLIVO2 | `P3ynjgIvVCQ` |
+| Research in motion | LDC 2022 Mission run | `fLVkKNkCJe0` |
+| Research in motion | Real-time obstacle-free trajectory | `WVKECac3PwY` |
+| Research in motion | Autonomous precision landing | `T07ogUUJA4Y` |
 
 ---
 

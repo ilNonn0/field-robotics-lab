@@ -186,15 +186,19 @@ Creare una presenza web e materiale di presentazione per il **Field Robotics and
 
 ### 1. index.html — versione cinematografica
 - Stile: Midnight Luxe (navy/champagne), GSAP ScrollTrigger, animazioni hero, shuffler, typewriter, stacking scroll
-- Sezioni: Hero · Pillars accordion · Features (3 card interattive) · Infrastructure · Gallery+Lightbox · Video (4 placeholder) · News · Projects · Publications · People (nascosta) · Join Us · Footer
+- Sezioni: Hero · Pillars accordion · Features (3 card interattive) · Infrastructure · Gallery+Lightbox · Video · News · Projects · Publications · People (nascosta) · Join Us · Footer
 - Font: Playfair Display + Inter + JetBrains Mono (Google Fonts CDN)
 - Immagine hero: Unsplash drone `photo-1473968512647-3e447244af8f`
+- Citazioni pillar: formato IEEE compatto (First author et al., **"Title,"** *Venue*, Year)
+- Pillar accordion: scrollabile (max-height 520px), griglia 2 colonne
 
 ### 2. classic.html — versione statica
 - Stile: DM Serif Display + DM Sans, bianco/navy, nessuna animazione
 - Stesse sezioni di index.html, stessa struttura accordion pillars
 - Navbar sticky con backdrop-blur
+- **Dark mode toggle** in navbar (localStorage + prefers-color-scheme)
 - Zero dipendenze JS esterne
+- Citazioni pillar: formato IEEE compatto
 
 ### 3. index_embedded.html — versione standalone
 - Identica a index.html ma con tutte le 7 foto incorporate come base64
@@ -205,7 +209,9 @@ Creare una presenza web e materiale di presentazione per il **Field Robotics and
 - Palette: Navy `1E2761` / Ice Blue `CADCFC` — font Cambria + Calibri
 - Script sorgente: `deck.js` (Node.js, PptxGenJS 4.0.1)
 
-### 5. File immagini (cartella img/)
+### 5. File immagini (cartella img/) — 15 file totali
+
+**Originali (7):**
 | File | Contenuto |
 |------|-----------|
 | drone_fleet.jpg | Fleet overview 3 piattaforme |
@@ -216,20 +222,37 @@ Creare una presenza web e materiale di presentazione per il **Field Robotics and
 | ldc_banner.jpg | LDC 2023 banner "7drone contest" |
 | ldc_action.jpg | LDC in action UAV+UGV in arena |
 
+**Nuove (8):**
+| File | Contenuto |
+|------|-----------|
+| AI_multi_robot_system.png | Frame teaser LDC — AI applied to heterogeneous multi-robot systems |
+| LDC_Challenge.png | UAV in volo durante challenge LDC 2022 |
+| Programming.png | Field setup — configurazione software prima del volo |
+| ICAUSS_Challenge.png | ICUAS 2022 UAV Competition — Team SantDrone · 3° posto |
+| SLAM_Gazebo.png | SLAM in simulation: Gazebo + RViz occupancy map |
+| Edge_computing.png | Onboard edge inference — blink detection e classificazione a bordo |
+| Drone_with_FASTLIVO.jpg | Drone con modulo LiDAR-camera FastLIVO2 embedded |
+| Building_reconstruction.png | Vista aerea edificio per missione 3D reconstruction FastLIVO2 |
+
 ---
 
 ## TODO
 
 ### Landing page (entrambe le versioni)
-- [ ] **Video** — caricare 4 video su YouTube (unlisted) e sostituire i placeholder:
-  ```html
-  <div class="video-embed">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen></iframe>
-  </div>
-  ```
-  Titoli: 1) Autonomous indoor flight 2) Multi-agent cooperative mission 3) LDC 2023 winning run 4) Infrastructure inspection
+- [x] **Video pillar 01** — Autonomous Exploration & SLAM:
+  - `NgcgkBRf8Yk` — Object-oriented Autonomous Exploration
+  - `7JpW1TOA3Dg` — OpenCV Spatial AI Contest 2021 Demo
+- [x] **Video pillar 03** — Infrastructure Inspection:
+  - `EaIgN363v3Q` — Enel Copter industrial boiler inspection
+  - `P3ynjgIvVCQ` — SLAM & 3D reconstruction with FastLIVO2
+- [x] **Video pillar 02** — LDC 2023 Official Teaser: `nEszhMOSrFM`
+- [x] **Sezione "Research in motion"**:
+  - `fLVkKNkCJe0` — LDC 2022 mission run
+  - `WVKECac3PwY` — Real-time obstacle-free trajectory planning
+  - `T07ogUUJA4Y` — Autonomous precision landing
+- [ ] **Video mancanti**:
+  - Pillar 02: multi-agent cooperative mission (placeholder)
+  - Sezione video: LDC 2023 winning run (placeholder)
 
 - [ ] **Sezione People** — aggiungere foto e bio del team (rimuovere `display:none` dal CSS `#people`):
   - Massimo Satler, Matteo Unetti, Giulia Bassani, Carlo Alberto Avizzano
@@ -271,6 +294,15 @@ Sito di riferimento analizzato: **ARPL — Agile Robotics and Perception Lab** (
 - Per attivare GitHub Pages: Settings → Pages → Branch: main → / (root) → Save
 
 ---
+
+## Note su citazioni pillar
+
+Le pubblicazioni nei pillar accordion usano formato **IEEE**:
+`A. Autore et al., **"Titolo,"** in/journal *Venue*, Anno.`
+- Titolo in **bold** tra virgolette
+- Venue in *italic*
+- Applicato a: index.html e classic.html
+- ⚠️ Attenzione: il regex per il bold va applicato **solo** dentro `<ul class="pillar-pubs">` — in passato ha corrotto attributi HTML globali
 
 ## Scelte di design
 
