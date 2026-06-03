@@ -45,14 +45,14 @@ This repository hosts the website of the **Field Robotics and Perception Lab**, 
 |---------|-----------|------|
 | DESIRE6G (G.A. 101096466) | Horizon Europe · SNS JU | Autonomous UAV testbed for 6G infrastructure |
 | 6G-LEADER (G.A. 101192080) | Horizon Europe | Dataset collection + drone platform design |
-| Leonardo Drone Contest | National · Leonardo S.p.A. | **Winner 2023** — GNSS-denied cooperative localisation |
+| Leonardo Drone Contest | National · Leonardo S.p.A. | **Winner 2023** (cycle 2) — drone + rover with PTZ camera · GNSS-denied cooperative localisation |
 | Agritech | PNRR · Partenariato Nazionale | Aerial & terrestrial robots for precision agriculture |
 
 ---
 
 ## Achievements
 
-- 🏆 **1st place — Leonardo Drone Contest 2023** · Team Sant'Anna
+- 🏆 **1st place — Leonardo Drone Contest 2023** · Team Sant'Anna · cycle 2 (2023–2025)
 - 🥉 **3rd place — ICUAS 2022 UAV Competition** · Team SantDrone · Dubrovnik
 - 🏅 **Finalist — OpenCV Spatial AI Contest 2021**
 

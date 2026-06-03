@@ -135,7 +135,10 @@ Creare una presenza web e materiale di presentazione per il **Field Robotics and
 | Leonardo Drone Contest | Nazionale (Leonardo S.p.A.) | 2021–2025 | — | Partecipante da edizione fondante; **vincitore ciclo 2023** |
 | Agritech | PNRR · Partenariato Nazionale | in corso | — | SSSA partner; lab contribuisce con piattaforme aeree e terrestri |
 
-**LDC dettaglio:** due cicli (2021–2023 e 2023–2025), 6→7 università italiane. Massimo presente dall'edizione fondante.
+**LDC dettaglio:**
+- **Ciclo 1 (2020–2022):** 6 università italiane · challenge con un solo drone · Massimo presente dall'edizione fondante (Sep 2020)
+- **Ciclo 2 (2023–2025):** 7 università italiane · challenge con drone + rover con camera PTZ
+- **Vittoria:** Sep 2023 (prima edizione del ciclo 2)
 
 ---
 
