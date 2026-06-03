@@ -336,6 +336,11 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
 .cat { border-right: 0.5px solid var(--border); border-top: 0.5px solid var(--border); }
 .cat:nth-child(even) { border-right: none; }
 .cat:nth-child(1), .cat:nth-child(2) { border-top: none; }
+
+/* ── VIDEO SECTION ───────────────────────────────── */
+.video-embed-wrap { }
+.video-embed-label { font-size: 13px; font-weight: 500; color: var(--text-1, #1a1a18); margin-bottom: 3px; }
+.video-embed-sub { font-size: 11px; color: var(--text-3, #9a9990); letter-spacing: 0.03em; }
 </style>
 </head>
 <body>
@@ -615,25 +620,31 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
   <div class="slabel">Video demonstrations</div>
   <h2 class="section-title">Research <em>in motion</em></h2>
   <div class="video-grid">
-    <div class="video-ph">
-      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <div class="video-ph-title">Autonomous indoor flight</div>
-      <div class="video-ph-sub">GNSS-denied exploration · YouTube link to be added</div>
+    <div class="video-embed-wrap">
+      <div class="video-embed-label">LDC 2022 — Mission run</div>
+      <div class="video-embed-sub">Autonomous exploration, intruder detection and precision QR code landing · Leonardo Drone Contest 2022</div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius-lg,12px);margin-top:8px;">
+        <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/fLVkKNkCJe0" title="LDC 2022 — Mission run" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
-    <div class="video-ph">
-      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <div class="video-ph-title">Multi-agent cooperative mission</div>
-      <div class="video-ph-sub">UAV + UGV heterogeneous team · YouTube link to be added</div>
+    <div class="video-embed-wrap">
+      <div class="video-embed-label">Real-time obstacle-free trajectory planning</div>
+      <div class="video-embed-sub">Onboard real-time trajectory planning with obstacle avoidance · Leonardo Drone Contest 2022</div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius-lg,12px);margin-top:8px;">
+        <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/WVKECac3PwY" title="Real-time obstacle-free trajectory planning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="video-embed-wrap">
+      <div class="video-embed-label">Autonomous precision landing</div>
+      <div class="video-embed-sub">Onboard real-time precision landing with visual feedback overlay · Leonardo Drone Contest 2022</div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius-lg,12px);margin-top:8px;">
+        <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/T07ogUUJA4Y" title="Autonomous precision landing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
     <div class="video-ph">
       <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       <div class="video-ph-title">Leonardo Drone Contest 2023</div>
       <div class="video-ph-sub">Winning run · YouTube link to be added</div>
-    </div>
-    <div class="video-ph">
-      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <div class="video-ph-title">Infrastructure inspection</div>
-      <div class="video-ph-sub">MAV confined-space demo · YouTube link to be added</div>
     </div>
   </div>
 </section>
