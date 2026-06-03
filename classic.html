@@ -118,7 +118,7 @@ nav {
 .section-title em { font-style: italic; color: var(--text-2); }
 
 /* ── PILLARS ─────────────────────────────────────── */
-.pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.pillars-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border, rgba(26,26,24,0.12)); border: 0.5px solid var(--border, rgba(26,26,24,0.12)); border-radius: var(--radius-lg, 12px); overflow: hidden; }
 .pillar-card { background: var(--bg); }
 .pillar-header {
   padding: 1.4rem 1.5rem;
@@ -138,7 +138,7 @@ nav {
 }
 .pillar-card.open .pillar-toggle { transform: rotate(45deg); }
 .pillar-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1); }
-.pillar-card.open .pillar-body { max-height: 1200px; }
+.pillar-card.open .pillar-body { max-height: 520px; overflow-y: auto; }
 .pillar-body-inner { padding: 0 1.5rem 1.5rem; border-top: 0.5px solid var(--border); }
 .pillar-block { margin-top: 1.1rem; }
 .pillar-block-title { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
@@ -319,6 +319,13 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
   letter-spacing: 0.06em; text-transform: uppercase;
 }
 
+  .pillar-expand-zone .pillar-body-inner { grid-template-columns: 1fr; }
+}
+
+/* ── PILLAR SCROLL ───────────────────────────────── */
+.pillar-body::-webkit-scrollbar { width: 4px; }
+.pillar-body::-webkit-scrollbar-track { background: transparent; }
+.pillar-body::-webkit-scrollbar-thumb { background: var(--border-2, rgba(26,26,24,0.22)); border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -358,7 +365,6 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
   <div class="slabel">Research areas</div>
   <h2 class="section-title">Four pillars of <em>autonomous robotics</em></h2>
   <div class="pillars-grid">
-
     <div class="pillar-card" onclick="togglePillar(this)">
       <div class="pillar-header">
         <div>
@@ -414,7 +420,6 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
         </div>
       </div>
     </div>
-
     <div class="pillar-card" onclick="togglePillar(this)">
       <div class="pillar-header">
         <div>
@@ -448,7 +453,6 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
         </div>
       </div>
     </div>
-
     <div class="pillar-card" onclick="togglePillar(this)">
       <div class="pillar-header">
         <div>
@@ -482,7 +486,6 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
         </div>
       </div>
     </div>
-
     <div class="pillar-card" onclick="togglePillar(this)">
       <div class="pillar-header">
         <div>
@@ -515,8 +518,9 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
         </div>
       </div>
     </div>
-
   </div>
+  <div class="pillar-expand-zone"></div>
+</div>
 </section>
 
 <!-- INFRASTRUCTURE -->
@@ -773,6 +777,7 @@ footer { padding: 2.5rem 0 1.5rem; border-top: 0.5px solid var(--border); displa
 </div><!-- .page -->
 
 <script>
+// ── PILLAR ACCORDION (expansion zone) ────────────
 function togglePillar(card) {
   const wasOpen = card.classList.contains('open');
   document.querySelectorAll('.pillar-card.open').forEach(c => c.classList.remove('open'));
